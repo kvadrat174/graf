@@ -1,0 +1,48 @@
+from tkinter import *
+from tkinter.ttk import Combobox
+from tkinter.ttk import Checkbutton
+import pandas as pd
+
+file = '122.xlsx'
+
+# Load spreadsheet
+xl = pd.ExcelFile(file)
+
+# Load a sheet into a DataFrame by name: df1
+df1 = xl.parse('Лист1')
+toms = df1['том/книга']
+
+
+def clicked():
+
+    for j in range(len(toms)):
+        qq = toms[j].get()
+        print(qq)
+
+window = Tk()
+window.geometry('400x250')
+window.title("Добро пожаловать в приложение PythonRu")
+combo = Combobox(window)
+lbl = Label(window, text="Здравствуйте, Любовь Александровна")
+lbl.grid(column=0, row=0)
+
+btn = Button(window, text="Не нажимать!", command=clicked)
+btn.grid(column=2, row=0)
+
+languages = ["Python", "JavaScript", "C#", "Java"]
+languages_listbox = Listbox()
+
+for i in range(len(toms)):
+    chk_state = BooleanVar()
+    chk_state.set(True)
+    chk = Checkbutton(window, text=f'Том / книга {toms[i]}', var=toms[i])
+    chk.grid(column=0, row=i+1)
+
+for language in languages:
+    languages_listbox.insert(END, language)
+
+languages_listbox.grid(column=4, row=0)
+
+
+
+window.mainloop()
